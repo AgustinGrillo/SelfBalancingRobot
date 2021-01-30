@@ -75,7 +75,7 @@
   
 <!-- End: For URDF to Gazebo compatibility -->
 
-
+	<link name="dummy_link"/>
   <link name="link_chassis">
     <!-- pose and inertial -->
     <pose>0 0 0.1 0 0 0</pose>
@@ -100,6 +100,12 @@
     </visual>
   </link>
   
+	<joint name="Base" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+		<child link="link_chassis"/>
+    <parent link="dummy_link"/>
+  </joint>
+
   <link name="link_left_wheel">
     <inertial>
       <mass value="0.2"/>
