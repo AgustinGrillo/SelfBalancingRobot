@@ -1,0 +1,16 @@
+venv/
+.idea/
+*.egg-info
+*.DS_Store
+dist/
+build/
+_build/
+*.pyc
+
+
+*/devel/
+_devel/
+*.catkin_workspace
+*.git
+tester/
+_tester/
