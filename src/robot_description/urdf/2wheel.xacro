@@ -39,6 +39,30 @@
     <material>Gazebo/Red</material>
   </gazebo>
   
+<!--
+	<gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+			<imu/>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+-->
+
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
       <legacyMode>false</legacyMode>
@@ -55,29 +79,39 @@
       <robotBaseFrame>link_chassis</robotBaseFrame>
     </plugin>
   </gazebo>
+
+	<!-- -->
   <gazebo>
       <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
           <alwaysOn>true</alwaysOn>
-					<updateRate>50</updateRate>
-          <bodyName>imu_link</bodyName>
+					<updateRate>100</updateRate>
+          <bodyName>dummy_link</bodyName>
           <topicName>imu</topicName>
           <serviceName>imu_service</serviceName>
           <gaussianNoise>0.0</gaussianNoise>
           <rpyOffsets>0 0 0</rpyOffsets>
+					<xyzOffset>0 0 0.3</xyzOffset>  
+
           <accelDrift>0.5 0.5 0.5</accelDrift>
           <accelGaussianNoise>0.35 0.35 0.3</accelGaussianNoise>
           <rateDrift>0.0 0.0 0.0</rateDrift>
           <rateGaussianNoise>0.00 0.00 0.00</rateGaussianNoise>
           <headingDrift>0.0</headingDrift>
           <headingGaussianNoise>0.00</headingGaussianNoise>
-          <updateRate>00</updateRate>
       </plugin>
    </gazebo>
-  
+<!-- xyzOffset is a workaround for problem. check generated code with gz sdf -p 2wheel.xacro-->
+
 <!-- End: For URDF to Gazebo compatibility -->
 
 	<link name="dummy_link"/>
-	<link name="imu_link"/>
+	<link name="imu_link">
+    <inertial>
+      <mass value="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
 
   <link name="link_chassis">
     <!-- pose and inertial -->
@@ -103,12 +137,12 @@
     </visual>
   </link>
   
-	<joint name="Base" type="fixed">
+	<joint name="base_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
 		<child link="link_chassis"/>
     <parent link="dummy_link"/>
   </joint>
-	<joint name="Imu" type="fixed">
+	<joint name="imu_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.3"/>
 		<child link="imu_link"/>
     <parent link="link_chassis"/>

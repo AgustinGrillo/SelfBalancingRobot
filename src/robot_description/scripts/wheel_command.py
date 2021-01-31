@@ -46,7 +46,13 @@ def callback(data):
     print("Angular vel:", angular_vel)
     print("Linear accel:", linear_accel)
 
-    msg2pub.linear.x = 12*orientation_euler[1]
+    if abs(orientation_euler[1]) > 0.1:
+        extra = 0.5 * (orientation_euler[1]/abs(orientation_euler[1]))
+    else:
+        extra = 0
+
+    msg2pub.linear.x = extra + 11*(orientation_euler[1])
+    print(msg2pub.linear.x)
 
 
 
