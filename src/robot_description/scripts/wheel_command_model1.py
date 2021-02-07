@@ -64,8 +64,7 @@ class robot_control:
         self.delta_tita_buffer.append(self.delta_tita)
         self.delta_tita_buffer = self.delta_tita_buffer[1:]
         # self.omega = self.old_omega - 4016.9*self.delta_tita + 3485.06244*self.old_delta_tita
-        # self.omega = 1.32*self.omega_buffer[-1] - 0.3199*self.omega_buffer[-2] - 6069*self.delta_tita_buffer[-1] + 8900*self.delta_tita_buffer[-2] - 3034*self.delta_tita_buffer[-3]
-        self.omega = 1.655*self.omega_buffer[-1] - 0.6548*self.omega_buffer[-2] - 5007*self.delta_tita_buffer[-1] + 8688*self.delta_tita_buffer[-2] - 3752*self.delta_tita_buffer[-3]
+        self.omega = 1.32*self.omega_buffer[-1] - 0.3199*self.omega_buffer[-2] - 6069*self.delta_tita_buffer[-1] + 8900*self.delta_tita_buffer[-2] - 3034*self.delta_tita_buffer[-3]
         self.omega_buffer.append(self.omega)
         self.omega_buffer = self.omega_buffer[1:]
         # self.old_delta_tita = copy.deepcopy(self.delta_tita)
