@@ -25,12 +25,21 @@
   <material name="white">
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
+  <material name="plank">
+    <color rgba="0.9098 0.77255 0.2314 1.0"/>
+  </material>
   
 
 <!-- Start: For URDF to Gazebo compatibility -->
 
   <gazebo reference="link_chassis">
-    <material>Gazebo/Black</material>
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="link_mouth">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="link_eyes">
+    <material>Gazebo/Red</material>
   </gazebo>
   <gazebo reference="link_left_wheel">
     <material>Gazebo/Red</material>
@@ -129,14 +138,54 @@
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.3"/>
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.3"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.1 0.3 0.6"/>
+        <!-- <box size="0.1 0.3 0.6"/> -->
+				<mesh filename="package://robot_description/stl/Plank.stl" scale="1 1 1"/>
       </geometry>
-      <material name="black"/>
+      <material name="plank"/>
     </visual>
   </link>
   
+	<link name="link_mouth">
+    <!-- pose and inertial -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+    <visual>
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.3"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.1 0.3 0.6"/> -->
+				<mesh filename="package://robot_description/stl/mouth.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+	
+	<link name="link_eyes">
+    <!-- pose and inertial -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+    <visual>
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.3"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.1 0.3 0.6"/> -->
+				<mesh filename="package://robot_description/stl/eyes.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
 	<joint name="base_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0"/>
 		<child link="link_chassis"/>
@@ -145,6 +194,16 @@
 	<joint name="imu_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.3"/>
 		<child link="imu_link"/>
+    <parent link="link_chassis"/>
+  </joint>
+	<joint name="eyes_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+		<child link="link_eyes"/>
+    <parent link="link_chassis"/>
+  </joint>
+	<joint name="mouth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+		<child link="link_mouth"/>
     <parent link="link_chassis"/>
   </joint>
 
