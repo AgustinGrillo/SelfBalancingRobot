@@ -1,0 +1,1 @@
+Do not use gazebo/reset_simulation service call. Use gazebo/reset_world instead.
