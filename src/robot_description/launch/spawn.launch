@@ -14,6 +14,9 @@
         <arg name="paused" value="$(arg pause)"/>
     </include>
 
+		<include file="$(find teleop_twist_joy)/launch/teleop.launch">
+  	</include>
+		
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find robot_description)/urdf/2wheel.xacro'"/>
 
     <arg name="x" default="0"/>
