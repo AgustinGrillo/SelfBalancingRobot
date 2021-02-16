@@ -1,0 +1,284 @@
+<?xml version="1.0" ?>
+<robot name="2wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.203125 0.23828125 0.28515625 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+  <material name="plank">
+    <color rgba="0.9098 0.77255 0.2314 1.0"/>
+  </material>
+  
+
+<!-- Start: For URDF to Gazebo compatibility -->
+	<!-- LINKS -->
+  <gazebo reference="link_chassis">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="link_mouth">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="link_eyes">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="link_left_wheel">
+    <material>Gazebo/Red</material>
+    <mu1>0.4</mu1>
+    <mu2>0.4</mu2>
+  </gazebo>
+  <gazebo reference="link_right_wheel">
+    <material>Gazebo/Red</material>
+    <mu1>0.4</mu1>
+    <mu2>0.4</mu2>
+  </gazebo>
+	<!-- JOINTS -->
+  <gazebo reference="joint_right_wheel">
+		<!-- <gearbox_ratio>0.0294</gearbox_ratio> -->
+  </gazebo>
+  <gazebo reference="joint_left_wheel">
+		<!-- <gearbox_ratio>0.0294</gearbox_ratio> -->
+  </gazebo>
+
+<!--
+	<gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+			<imu/>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+-->
+	<!-- PLUGINS -->
+  <gazebo>
+    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10</updateRate>
+      <leftJoint>joint_left_wheel</leftJoint>
+      <rightJoint>joint_right_wheel</rightJoint>
+      <wheelSeparation>0.34</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <wheelTorque>0.8</wheelTorque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>link_chassis</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+	<!-- -->
+  <gazebo>
+      <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+          <alwaysOn>true</alwaysOn>
+					<updateRate>100</updateRate>
+          <bodyName>dummy_link</bodyName>
+          <topicName>imu</topicName>
+          <serviceName>imu_service</serviceName>
+          <gaussianNoise>0.0</gaussianNoise>
+          <rpyOffsets>0 0 0</rpyOffsets>
+					<xyzOffset>0 0 0.3</xyzOffset>  
+
+          <accelDrift>0.5 0.5 0.5</accelDrift>
+          <accelGaussianNoise>0.35 0.35 0.3</accelGaussianNoise>
+          <rateDrift>0.0 0.0 0.0</rateDrift>
+          <rateGaussianNoise>0.00 0.00 0.00</rateGaussianNoise>
+          <headingDrift>0.0</headingDrift>
+          <headingGaussianNoise>0.00</headingGaussianNoise>
+      </plugin>
+   </gazebo>
+<!-- xyzOffset is a workaround for problem. check generated code with gz sdf -p 2wheel.xacro-->
+
+<!-- End: For URDF to Gazebo compatibility -->
+
+	<link name="dummy_link"/>
+	<link name="imu_link">
+    <inertial>
+      <mass value="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+
+  <link name="link_chassis">
+    <!-- pose and inertial -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="2"/>
+      <origin rpy="0 0 0" xyz="0 0 0.3"/>
+      <inertia ixx="0.075" ixy="0" ixz="0" iyy="0.061667" iyz="0" izz="0.01667"/>
+    </inertial>
+    <!-- body -->
+    <collision name="collision_chassis">
+      <origin rpy="0 0 0" xyz="0 0 0.3"/>
+      <geometry>
+        <box size="0.1 0.3 0.6"/>
+      </geometry>
+    </collision>
+    <visual>
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.3"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.1 0.3 0.6"/> -->
+				<mesh filename="package://robot_description/stl/Plank.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="plank"/>
+    </visual>
+  </link>
+  
+	<link name="link_mouth">
+    <!-- pose and inertial -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+    <visual>
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.3"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.1 0.3 0.6"/> -->
+				<mesh filename="package://robot_description/stl/mouth.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+	
+	<link name="link_eyes">
+    <!-- pose and inertial -->
+    <pose>0 0 0.1 0 0 0</pose>
+    <inertial>
+      <mass value="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+    <visual>
+      <!-- <origin rpy="0 0 0" xyz="0 0 0.3"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <!-- <box size="0.1 0.3 0.6"/> -->
+				<mesh filename="package://robot_description/stl/eyes.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+	<joint name="base_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+		<child link="link_chassis"/>
+    <parent link="dummy_link"/>
+  </joint>
+	<joint name="imu_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.3"/>
+		<child link="imu_link"/>
+    <parent link="link_chassis"/>
+  </joint>
+	<joint name="eyes_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+		<child link="link_eyes"/>
+    <parent link="link_chassis"/>
+  </joint>
+	<joint name="mouth_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+		<child link="link_mouth"/>
+    <parent link="link_chassis"/>
+  </joint>
+
+  <link name="link_left_wheel">
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.0005" iyz="0" izz="0.0005"/>
+    </inertial>
+    <collision name="link_left_wheel_collision">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>
+    </collision>
+    <visual name="link_left_wheel_visual">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>
+    </visual>
+  </link>
+  
+  <joint name="joint_left_wheel" type="revolute">  <!-- We set revolute with infinite limits as a workaround to sdf conversion problems -->
+    <origin rpy="0 0 0" xyz="0 0.17 0"/>
+    <child link="link_left_wheel"/>
+    <parent link="link_chassis"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+		<limit effort="0.8" velocity="30" lower="-1e+16" upper="1e+16" />
+    <!--<limit effort="0.8" velocity="30"/>-->
+    <dynamics damping="0.0005" friction="0.0005"/>  <!-- damping coefficient: [N*m*s/rad] 0.0005-->
+		<safety_controller k_velocity="0.026"/>  <!-- Kv en este caso: Torque/vel (http://wiki.ros.org/pr2_controller_manager/safety_limits) -->
+  </joint>
+  
+  <link name="link_right_wheel">
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.0005" iyz="0" izz="0.0005"/>
+    </inertial>
+    <collision name="link_right_wheel_collision">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>
+    </collision>
+    <visual name="link_right_wheel_visual">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>
+    </visual>
+  </link>
+  
+  <joint name="joint_right_wheel" type="revolute">  <!-- We set revolute with infinite limits as a workaround to sdf conversion problems -->
+    <origin rpy="0 0 0" xyz="0 -0.17 0"/>
+    <child link="link_right_wheel"/>
+    <parent link="link_chassis"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+		<limit effort="0.8" velocity="30" lower="-1e+16" upper="1e+16" />
+    <!--<limit effort="0.8" velocity="30"/>-->
+  	<dynamics damping="0.0005" friction="0.0005"/>  <!-- damping coefficient: [N*m*s/rad] -->
+		<safety_controller k_velocity="0.026"/>  <!-- Kv en este caso: Torque/vel (http://wiki.ros.org/pr2_controller_manager/safety_limits) -->
+  </joint>
+
+	<!-- TRANSMISION (TODO)-->
+</robot>
