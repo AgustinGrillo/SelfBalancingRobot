@@ -1,0 +1,40 @@
+Wheel left
+
+Centro de masa desplazado respecto del centro geometrico de la ruea (sin el acople):
+Y = -0.38566
+
+Component Instances (1)
+Area	1.883E+04 mm^2
+Density	0.001 g / mm^3
+Mass	87.306 g
+Volume	6.452E+04 mm^3
+Physical Material	(Various)
+
+Bounding Box
+	Length 	 78.528 mm
+	Width 	 24.10 mm
+	Height 	 78.528 mm
+World X,Y,Z	0.00 mm, 0.00 mm, -110.00 mm
+Center of Mass	-0.944 mm, 122.043 mm, -27.797 mm
+
+Moment of Inertia at Center of Mass   (g mm^2)
+	Ixx = 2.776E+04
+	Ixy = 15.762
+	Ixz = -0.097
+	Iyx = 15.762
+	Iyy = 4.868E+04
+	Iyz = -0.371
+	Izx = -0.097
+	Izy = -0.371
+	Izz = 2.774E+04
+
+Moment of Inertia at Origin   (g mm^2)
+	Ixx = 1.396E+06
+	Ixy = 1.007E+04
+	Ixz = -2289.858
+	Iyx = 1.007E+04
+	Iyy = 1.162E+05
+	Iyz = 2.962E+05
+	Izx = -2289.858
+	Izy = 2.962E+05
+	Izz = 1.328E+06

@@ -1,0 +1,42 @@
+Base
+
+Ubicacion del centro de masa respecto a los ejes de la base:
+X = -0.631 mm
+Y = 0.044 mm
+Z = 16.159 mm
+
+
+Area	2.356E+05 mm^2
+Density	0.003 g / mm^3
+Mass	836.883 g
+Volume	3.091E+05 mm^3
+Physical Material	(Various)
+
+Bounding Box
+	Length 	 103.11 mm
+	Width 	 244.118 mm
+	Height 	 166.021 mm
+World X,Y,Z	0.00 mm, 0.00 mm, -40.00 mm
+Center of Mass	-0.631 mm, 0.044 mm, 16.159 mm
+
+Moment of Inertia at Center of Mass   (g mm^2)
+	Ixx = 6.495E+06
+	Ixy = 979.958
+	Ixz = -1.335E+04
+	Iyx = 979.958
+	Iyy = 2.282E+06
+	Iyz = 1000.67
+	Izx = -1.335E+04
+	Izy = 1000.67
+	Izz = 5.266E+06
+
+Moment of Inertia at Origin   (g mm^2)
+	Ixx = 6.713E+06
+	Ixy = 1003.448
+	Ixz = -4813.044
+	Iyx = 1003.448
+	Iyy = 2.501E+06
+	Iyz = 399.349
+	Izx = -4813.044
+	Izy = 399.349
+	Izz = 5.267E+06
